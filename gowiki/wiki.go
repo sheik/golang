@@ -13,6 +13,7 @@ import (
 const SRV_PORT = ":8080"
 const SRV_HOST = ""
 const DATA_DIR = "data/"
+const TEMPLATE_DIR = "templates/"
 
 type Page struct {
 	Title    string
@@ -37,7 +38,7 @@ func loadPage(title string) (*Page, error) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	t, err := template.ParseFiles(tmpl + ".html")
+	t, err := template.ParseFiles(TEMPLATE_DIR + tmpl + ".html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
