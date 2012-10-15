@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/russross/blackfriday"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -14,8 +15,9 @@ const SRV_HOST = ""
 const DATA_DIR = "data/"
 
 type Page struct {
-	Title string
-	Body  []byte
+	Title    string
+	Body     []byte
+	HTMLBody template.HTML
 }
 
 var titleValidator = regexp.MustCompile("^[a-zA-Z0-9/\\.\\-]*$")
@@ -31,7 +33,7 @@ func loadPage(title string) (*Page, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Page{Title: title, Body: body}, nil
+	return &Page{Title: title, Body: body, HTMLBody: template.HTML(blackfriday.MarkdownCommon(body))}, nil
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
