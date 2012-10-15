@@ -17,7 +17,7 @@
 		</div>
 		<div id="wrapper">
 			<h1>Editing {{.Title}}</h1>
-			<div class="epiceditors" id="body"></div>
+			<div class="epiceditors" id="body"></div><br />
 			<p class="btn btn-small"><a id="save-page">Save Page</a></p>
 			<p class="btn btn-small"><a id="cancel" href="/view/{{.Title}}" onclick="return confirm('Are you sure you wish to cancel?');">Cancel</a></p>
 			<form action="/save/{{.Title}}" method="POST" name="edit-form" id="edit-form">

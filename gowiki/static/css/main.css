@@ -1,6 +1,6 @@
 body {
   background-color: #e1dcb8;
-  background: url(../images/bg-glow.png) repeat-x center top fixed, url(../images/bg-texture.jpg) repeat center top fixed;
+  background: url(/static/images/bg-glow.png) repeat-x center top fixed, url(/static/images/bg-texture.jpg) repeat center top fixed;
   font-family: 'Lato', 'Helvetica Neue', helvetica, arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -198,7 +198,7 @@ p.btn a {
 p.btn a.zip {
   min-height: 32px;
   padding: 6px 0 0 37px;
-  background: url(../images/zip.png) no-repeat;
+  background: url(/static/images/zip.png) no-repeat;
 }
 p.btn-small {
   padding:2px 8px;
