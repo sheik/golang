@@ -11,6 +11,7 @@ import (
 
 const SRV_PORT = ":8080"
 const SRV_HOST = ""
+const DATA_DIR = "data/"
 
 type Page struct {
 	Title string
@@ -20,12 +21,12 @@ type Page struct {
 var titleValidator = regexp.MustCompile("^[a-zA-Z0-9/\\.\\-]*$")
 
 func (p *Page) save() error {
-	filename := p.Title + ".txt"
+	filename := DATA_DIR + p.Title + ".txt"
 	return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
+	filename := DATA_DIR + title + ".txt"
 	body, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
