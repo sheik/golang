@@ -17,7 +17,7 @@ type Page struct {
 	Body  []byte
 }
 
-var titleValidator = regexp.MustCompile("^[a-zA-Z0-9/\\.]*$")
+var titleValidator = regexp.MustCompile("^[a-zA-Z0-9/\\.\\-]*$")
 
 func (p *Page) save() error {
 	filename := p.Title + ".txt"

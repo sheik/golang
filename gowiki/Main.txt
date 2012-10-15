@@ -1,1 +1,2 @@
-Welcome to the main page!
+# Welcome to Greynode!
+This is a test page

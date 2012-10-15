@@ -1,20 +1,61 @@
+<!DOCTYPE html>              
 <html>
-<head>
-	<script src="/static/epiceditor/js/epiceditor.js"></script>
-	<script>
-		var editor = new EpicEditor().load({
-			container: 'body',
-			basePath: '/stat/static/epiceditor/'
+	<head>
+		<title>Markdown</title>
+		<link rel="stylesheet" href="/static/css/main.css">
+		<link rel="stylesheet" href="/static/css/prettify.css">
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,400italic|Arvo:400,400italic' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div id="toc">
+			<h2><a href="#">Greynode</a></h2>
+			<ul id="toc-list">
+				<li class="toc-h2"><a href="#">Home</a></li>
+				<li class="toc-h2"><a href="#">About</a></li>
+				<li class="toc-h3"><a href="#">Resume</a></li>
+			</ul>
+		</div>
+		<div id="wrapper">
+			<h1>Editing {{.Title}}</h1>
+			<div class="epiceditors" id="body"></div>
+			<p class="btn btn-small"><a id="save-page">Save Page</a></p>
+			<p class="btn btn-small"><a id="cancel" href="/view/{{.Title}}" onclick="return confirm('Are you sure you wish to cancel?');">Cancel</a></p>
+			<form action="/save/{{.Title}}" method="POST" name="edit-form" id="edit-form">
+				<input type="hidden" name="body" value="{{printf "%s" .Body}}"/>
+			</form>
+		</div>
+
+		<script src="/static/js/jquery.min.js"></script>
+		<script src="/static/js/prettify.js"></script>
+		<script src="/static/js/epiceditor.js"></script>
+		<script>
+		/*global $:false, prettyPrint:false */
+
+		$(function () {
+		  var opts =
+			  { container: 'body'
+			  , file: { defaultContent: "{{printf "%s" .Body}}" }
+			  , focusOnLoad: true
+			  , clientSideStorage: false
+			  , basePath: '/static'
+			  }
+			, editor = new EpicEditor(opts).load();
+			
+		  // So people can play with it in their console
+		  window.editor = editor;
+		  
+		  $('pre').addClass('prettyprint')
+		  prettyPrint()
+
+		  $('#save-page').click(function() {
+			  $('#edit-form input[name=body]').val(editor.exportFile());
+			  document.forms["edit-form"].submit();
+		  });
+
+		  $(window).resize(function () {
+			$('#toc').height(window.innerHeight + 'px');
+		  }).trigger('resize');
 		});
-	</script>
-</head>
-<body>
-
-	<h1>Editing {{.Title}}</h1>
-
-	<form action="/save/{{.Title}}" method="POST">
-	    <div id="body">{{printf "%s" .Body}}</div>
-	    <div><input type="submit" value="Save"></div>
-	</form>
-</body>
+		</script>
+	</body>
 </html>
